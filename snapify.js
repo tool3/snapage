@@ -50,3 +50,4 @@ async function snap(url, options = {}) {
 }
 
 module.exports = snap;
+module.exports.default = snap;

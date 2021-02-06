@@ -10,5 +10,13 @@ const snap = require('./snapify');
     script: "document.querySelector('.react-toggle').click()",
     viewports: [iPhone, iPad, desktop]
   });
+
+  await snap('https://google.com', {
+    name: 'google',
+    viewports: [{width: 1920, height: 1080}],
+    fullPage: true
+  });
   
+
+
 })();
