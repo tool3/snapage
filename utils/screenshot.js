@@ -14,9 +14,9 @@ async function screenshot({ page, url, options }) {
       );
     } else {
       await page.goto(url, { waitUntil: 'networkidle0' });
-      await page.addStyleTag({ content: `body{ ${styles} }` });
     }
 
+    
     const device = typeof viewport === 'string';
 
     // set viewport
@@ -32,24 +32,23 @@ async function screenshot({ page, url, options }) {
       device ? viewport : Object.values(viewport).join('X')
     }.png`;
 
+    // apply styles
+    await page.addStyleTag({ content: `body{ ${styles} }` });
+
     // lazy loaded images
     if (scroll) {
       await scrollPage(page);
       await page.evaluate(() => window.scrollTo(0, 0));
     }
 
-    // set element
-    if (element) {
-      const element = await page.$(element);
-      const snap = await element.screenshot({ type: 'png' });
-      const buffer = Buffer.from(snap).toString('base64');
-      await page.setContent(
-        `<html><body style="margin: 0;"><img style="margin: 0; width:100%; ${styles}" src="data:image/jpeg;base64,${buffer}" /></body></html>`
-      );
-    }
-
     // before script
     if (script) await page.evaluate(script);
+
+    // set element
+    if (element) {
+      const area = await page.$(element);
+      return screenshots.push(await area.screenshot({ ...opts, path }));
+    }
 
     // create snap dir
     const exists = await fs
@@ -57,6 +56,7 @@ async function screenshot({ page, url, options }) {
       .then(() => 1)
       .catch(() => 0);
     if (!exists) await fs.mkdir(snapDir);
+    
     screenshots.push(await page.screenshot({ ...opts, path }));
   } catch (error) {
     console.error(error);
