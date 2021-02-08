@@ -12,7 +12,8 @@ export type SnapifyOptions = {
   script?: string;
   fullPage?: boolean;
   scroll?: boolean;
+  persist?: boolean;
   viewports?: Viewport[];
 };
 
-export default function snap(url: string, options: SnapifyOptions): Promise<Array<Buffer>>;
+export default function snap(url: string, options?: SnapifyOptions): Promise<Array<Buffer>>;

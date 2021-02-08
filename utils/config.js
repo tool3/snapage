@@ -19,7 +19,8 @@ function getConfig(config, localPath) {
     style: {},
     script: false,
     fullPage: false,
-    scroll: false
+    scroll: false,
+    persist: true
   };
 
   if (config) {

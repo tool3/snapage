@@ -3,7 +3,7 @@ const fs = require('fs').promises;
 async function screenshot({ page, url, options }) {
   try {
     const { snapDir, viewport, devices, opts, screenshots = [] } = options;
-    const { location, script, style, name, scroll, element } = opts;
+    const { location, script, style, name, scroll, element, persist } = opts;
     // visit page
     const styles = Object.keys(style)
       .map((key) => `${key}: ${style[key]};`)
@@ -28,9 +28,9 @@ async function screenshot({ page, url, options }) {
       await page.setViewport({ ...viewport, deviceScaleFactor: 4 });
     }
 
-    const path = `${location}/${name}_${
+    const path = persist ? `${location}/${name}_${
       device ? viewport : Object.values(viewport).join('X')
-    }.png`;
+    }.png` : undefined;
 
     // apply styles
     await page.addStyleTag({ content: `body{ ${styles} }` });
@@ -47,6 +47,7 @@ async function screenshot({ page, url, options }) {
     // set element
     if (element) {
       const area = await page.$(element);
+      const path = persist ? path : undefined;
       return screenshots.push(await area.screenshot({ ...opts, path }));
     }
 
@@ -56,7 +57,7 @@ async function screenshot({ page, url, options }) {
       .then(() => 1)
       .catch(() => 0);
     if (!exists) await fs.mkdir(snapDir);
-    
+
     screenshots.push(await page.screenshot({ ...opts, path }));
   } catch (error) {
     console.error(error);
