@@ -17,12 +17,6 @@ async function snap(url, options = {}) {
     const snapDir = path.resolve(opts.location);
     const devices = puppeteer.devices;
     const screenshots = [];
-    
-    const viewports = opts.viewports || [
-      { width: 1920, height: 1080 },
-      'iPad Pro',
-      'iPhone X',
-    ];
 
     const cluster = await Cluster.launch({
       concurrency: Cluster.CONCURRENCY_CONTEXT,
@@ -34,7 +28,7 @@ async function snap(url, options = {}) {
       await screenshot({ page, url, options });
     });
 
-    for (const viewport of viewports) {
+    for (const viewport of opts.viewports) {
       cluster.queue({ url, viewport });
     }
 

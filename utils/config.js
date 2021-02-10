@@ -14,13 +14,12 @@ function getConfig(config, localPath) {
   const options = {
     name: generateId(),
     location: `${localPath}/snaps`,
-    width: 1080,
-    height: 1280,
+    viewports: [{ width: 1920, height: 1080 }, 'iPad Pro', 'iPhone X'],
     style: {},
     script: false,
     fullPage: false,
     scroll: false,
-    persist: true
+    persist: true,
   };
 
   if (config) {

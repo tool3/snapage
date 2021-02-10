@@ -6,14 +6,12 @@ export type Viewport = {
 export type SnapifyOptions = {
   name?: string;
   location?: string;
-  width?: number;
-  height?: number;
+  viewports?: Array<Viewport>;
   style?: string;
   script?: string;
   fullPage?: boolean;
   scroll?: boolean;
   persist?: boolean;
-  viewports?: Viewport[];
 };
 
 export default function snap(url: string, options?: SnapifyOptions): Promise<Array<Buffer>>;
