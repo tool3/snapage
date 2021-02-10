@@ -29,7 +29,7 @@ async function screenshot({ page, url, options }) {
     }
 
     const path = persist ? `${location}/${name}_${
-      device ? viewport : Object.values(viewport).join('X')
+      device ? viewport : Object.values(viewport).join('x')
     }.png` : undefined;
 
     // apply styles
@@ -47,8 +47,8 @@ async function screenshot({ page, url, options }) {
     // set element
     if (element) {
       const area = await page.$(element);
-      const path = persist ? path : undefined;
-      return screenshots.push(await area.screenshot({ ...opts, path }));
+      const filePath = persist ? path : undefined;
+      return screenshots.push(await area.screenshot({ ...opts, path: filePath }));
     }
 
     // create snap dir
