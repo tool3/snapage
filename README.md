@@ -39,11 +39,11 @@ async snap(url: string, options?: SnapifyOptions): Promise<Array<Buffer>>;
 
 # options
 
-## `name`?: string;
-## `location`?: string;
-## `viewports`?: Viewport[]
-## `style`?: string;
-## `script`?: string;
-## `fullPage`?: boolean;
-## `scroll`?: boolean;
-## `persist`?: boolean;
+## name: `string`
+## location: `string`
+## viewports: `[{width, height}, 'emulatedDevice']`
+## style: `string`
+## script: `string`
+## fullPage: `boolean`
+## scroll: `boolean`
+## persist: `boolean`
