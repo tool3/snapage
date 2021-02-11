@@ -1,5 +1,5 @@
 # snapify
-create beautiful page screenshots
+take beautiful page screenshots
 
 # install
 ```bash
