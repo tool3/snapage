@@ -23,13 +23,13 @@ const snap = require('./snapify');
 ![](./iPad_Pro.png)
 
 # features
-    ✅ plug and play
-    ✅ element screenshots
-    ✅ custom css styles
-    ✅ custom pre-snap script
-    ✅ supports all chrome emulated devices and their orientation
-    ✅ supports lazy loaded websites by scrolling the page
-    ✅ uses puppeteer-cluster for concurrenct screenshots
+✅ plug and play   
+✅ element screenshots   
+✅ custom css styles   
+✅ custom pre-snap script   
+✅ supports all chrome emulated devices and their orientation   
+✅ supports lazy loaded content by scrolling the page   
+✅ uses puppeteer-cluster for concurrenct screenshots   
 
 
 # api
