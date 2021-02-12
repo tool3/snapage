@@ -15,7 +15,6 @@ async function screenshot({ page, url, options }) {
     } else {
       await page.goto(url, { waitUntil: 'networkidle0' });
     }
-
     
     const device = typeof viewport === 'string';
 
