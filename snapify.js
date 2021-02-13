@@ -16,13 +16,12 @@ async function snap(url, options = {}) {
     const opts = getConfig(options, localPath);
     const snapDir = path.resolve(opts.location);
     const devices = puppeteer.devices;
-    
-    puppeteer.defaultArgs({args: ['--no-sandbox', '--disable-setuid-sandbox']});
     const screenshots = [];
 
     const cluster = await Cluster.launch({
       concurrency: Cluster.CONCURRENCY_CONTEXT,
       maxConcurrency: 3,
+      puppeteerOptions: {args: ['--no-sandbox', '--disable-setuid-sandbox']}
       
     });
 
