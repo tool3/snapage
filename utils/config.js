@@ -24,10 +24,12 @@ function getConfig(config, localPath) {
 
   if (config) {
     const userConfig = Object.keys(config).reduce((acc, key) => {
-      acc[key] =
-        typeof options[key] === 'object'
-          ? Object.assign(options[key], config[key])
-          : config[key];
+      if (typeof options[key] === 'object' && !Array.isArray(options[key])) {
+        acc[key] = Object.assign(options[key], config[key])
+      } else {
+        options[key] = config[key]
+      }
+        
       return acc;
     }, {});
 
