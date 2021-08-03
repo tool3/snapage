@@ -3,7 +3,7 @@ export type Viewport = {
   height?: number;
 };
 
-export type SnapifyOptions = {
+export type SnapageOptions = {
   name?: string;
   location?: string;
   viewports?: Array<Viewport>;
@@ -14,4 +14,4 @@ export type SnapifyOptions = {
   persist?: boolean;
 };
 
-export default function snap(url: string, options?: SnapifyOptions): Promise<Array<Buffer>>;
+export default function snap(url: string, options?: SnapageOptions): Promise<Array<Buffer>>;

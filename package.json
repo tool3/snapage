@@ -1,8 +1,8 @@
 {
-  "name": "snapify",
-  "version": "1.4.1",
+  "name": "snapage",
+  "version": "1.0.0",
   "description": "take beautiful page screenshots",
-  "main": "snapify.js",
+  "main": "snapage.js",
   "scripts": {
     "test": "node test.js"
   },

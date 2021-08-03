@@ -1,14 +1,14 @@
-# snapify
+# snapage
 take beautiful page screenshots
 
 # install
 ```bash
-yarn add snapify
+yarn add snapage
 ```
 
 # usage
 ```js
-const snap = require('./snapify');
+const snap = require('./snapage');
 (async () => {
   await snap('https://apple.com', {
     viewports: ['iPad Pro'],
@@ -34,7 +34,7 @@ const snap = require('./snapify');
 
 # api
 ```typescript
-async snap(url: string, options?: SnapifyOptions): Promise<Array<Buffer>>;
+async snap(url: string, options?: SnapageOptions): Promise<Array<Buffer>>;
 ```
 
 # options
