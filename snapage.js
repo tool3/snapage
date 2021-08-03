@@ -1,4 +1,5 @@
 const path = require('path');
+const fs = require('fs').promises;
 const getConfig = require('./utils/config');
 const { Cluster } = require('puppeteer-cluster');
 const puppeteer = require('puppeteer');
@@ -15,6 +16,12 @@ async function snap(url, options = {}) {
     const localPath = process.env.INIT_CWD || process.cwd();
     const opts = getConfig(options, localPath);
     const snapDir = path.resolve(opts.location);
+    // create snap dir
+    const exists = await fs
+      .access(snapDir)
+      .then(() => 1)
+      .catch(() => 0);
+    if (!exists) await fs.mkdir(snapDir);
     const devices = puppeteer.devices;
     const screenshots = [];
 

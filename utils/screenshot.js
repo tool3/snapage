@@ -50,13 +50,6 @@ async function screenshot({ page, url, options }) {
       return screenshots.push(await area.screenshot({ ...opts, path: filePath }));
     }
 
-    // create snap dir
-    const exists = await fs
-      .access(snapDir)
-      .then(() => 1)
-      .catch(() => 0);
-    if (!exists) await fs.mkdir(snapDir);
-
     screenshots.push(await page.screenshot({ ...opts, path }));
   } catch (error) {
     console.error(error);
