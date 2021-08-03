@@ -3,11 +3,13 @@ export type Viewport = {
   height?: number;
 };
 
+export type Style = Record<string, string>;
+
 export type SnapageOptions = {
   name?: string;
-  location?: string;
+  path?: string;
   viewports?: Array<Viewport>;
-  style?: string;
+  style?: Style;
   script?: string;
   fullPage?: boolean;
   scroll?: boolean;

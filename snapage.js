@@ -15,7 +15,7 @@ async function snap(url, options = {}) {
     // set config
     const localPath = process.env.INIT_CWD || process.cwd();
     const opts = getConfig(options, localPath);
-    const snapDir = path.resolve(opts.location);
+    const snapDir = path.resolve(opts.path);
     // create snap dir
     const exists = await fs
       .access(snapDir)

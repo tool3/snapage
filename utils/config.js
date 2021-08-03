@@ -13,7 +13,7 @@ function generateId() {
 function getConfig(config, localPath) {
   const options = {
     name: generateId(),
-    location: `${localPath}/snaps`,
+    path: `${localPath}/snaps`,
     viewports: [{ width: 1920, height: 1080 }, 'iPad Pro', 'iPhone X'],
     style: {},
     script: false,

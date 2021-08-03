@@ -1,5 +1,5 @@
 # snapage
-take beautiful page screenshots
+snap a web page
 
 # install
 ```bash
@@ -41,12 +41,12 @@ async snap(url: string, options?: SnapageOptions): Promise<Array<Buffer>>;
 
 ## name
 `string`
-## location
+## path
 `string`
 ## viewports
 `[{width, height}, 'emulatedDevice']`
 ## style
-`string`
+`object`
 ## script
 `string`
 ## fullPage
@@ -55,3 +55,9 @@ async snap(url: string, options?: SnapageOptions): Promise<Array<Buffer>>;
 `boolean`
 ## persist
 `boolean`
+
+# examples
+do not persist screenshots - return screenshot per viewport provided in the `viewports` array:
+```typescript
+const screenshots: Buffer[] = await snap('https://google.com', {persist: false});
+```

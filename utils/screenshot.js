@@ -1,9 +1,7 @@
-const fs = require('fs').promises;
-
 async function screenshot({ page, url, options }) {
   try {
-    const { snapDir, viewport, devices, opts, screenshots = [] } = options;
-    const { location, script, style, name, scroll, element, persist } = opts;
+    const { viewport, devices, opts, screenshots = [] } = options;
+    const { path, script, style, name, scroll, element, persist } = opts;
     // visit page
     const styles = Object.keys(style)
       .map((key) => `${key}: ${style[key]};`)
@@ -27,7 +25,7 @@ async function screenshot({ page, url, options }) {
       await page.setViewport({ ...viewport, deviceScaleFactor: 4 });
     }
 
-    const path = persist ? `${location}/${name}_${
+    const screenshotPath = persist ? `${path}/${name}_${
       device ? viewport : Object.values(viewport).join('x')
     }.png` : undefined;
 
@@ -46,11 +44,11 @@ async function screenshot({ page, url, options }) {
     // set element
     if (element) {
       const area = await page.$(element);
-      const filePath = persist ? path : undefined;
+      const filePath = persist ? screenshotPath : undefined;
       return screenshots.push(await area.screenshot({ ...opts, path: filePath }));
     }
 
-    screenshots.push(await page.screenshot({ ...opts, path }));
+    screenshots.push(await page.screenshot({ ...opts, path: screenshotPath }));
   } catch (error) {
     console.error(error);
   }
