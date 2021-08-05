@@ -1,11 +1,11 @@
+const { getStyles, stringifyStyle } = require("./styles");
+
 async function screenshot({ page, url, options }) {
   try {
     const { viewport, devices, opts, screenshots = [] } = options;
     const { path, script, style, name, scroll, element, persist } = opts;
     // visit page
-    const styles = Object.keys(style)
-      .map((key) => `${key}: ${style[key]};`)
-      .join(' ');
+    const styles = stringifyStyle(style)
     if (url.includes('data:image')) {
       await page.setContent(
         `<html><body style="margin: 0;"><img style="margin: 0; width:100%; ${styles}" src="${url}" /></body></html>`
@@ -29,8 +29,14 @@ async function screenshot({ page, url, options }) {
       device ? viewport : Object.values(viewport).join('x')
     }.png` : undefined;
 
+    const hasClasses = Object.values(style).some(s => typeof s === "object");
+    const stylesObject = {content: `body{ ${styles} }`};
+    if (hasClasses) {
+      Object.assign(stylesObject, {content: getStyles(style)})
+    }
+    const {content} = stylesObject;
     // apply styles
-    await page.addStyleTag({ content: `body{ ${styles} }` });
+    await page.addStyleTag({ content });
 
     // lazy loaded images
     if (scroll) {

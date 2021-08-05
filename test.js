@@ -1,12 +1,17 @@
 const snap = require('./snapage');
-// const snap = require('./snapage');
 
 (async () => {
   await snap('https://restory.netlify.app', {
     script: "document.querySelector('.react-toggle').click()",
     element: ".hero",
     viewports: [{width: 800, height: 600}],
-    omitBackground: true
+    omitBackground: true,
+    style: {
+      '.some-class': {
+        color: 'white',
+        filter: 'blur(5px)'
+      }
+    }
   });
 
   try {
