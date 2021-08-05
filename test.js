@@ -1,30 +1,31 @@
 const snap = require('./snapage');
 
 (async () => {
-  await snap('https://restory.netlify.app', {
-    script: "document.querySelector('.react-toggle').click()",
-    element: ".hero",
+  await snap('https://apple.com', {
+    // script: "document.querySelector('.react-toggle').click()",
+    // element: ".unit-wrapper",
     viewports: [{width: 800, height: 600}],
-    omitBackground: true,
+    fullPage: true,
+    scroll: true,
+    // omitBackground: true,
     style: {
-      '.some-class': {
-        color: 'white',
-        filter: 'blur(5px)'
+      '.unit-wrapper': {
+        filter: 'blur(20px)'
       }
-    }
+    },
   });
 
-  try {
-    await snap('https://apple.com', {
-      viewports: ['iPad Pro'],
-      fullPage: true,
-      style: {
-        filter: 'grayscale(100%)'
-      }
-    });  
-  } catch (error) {
-    console.log(error.stack)
-    throw error;
-  }
+  // try {
+  //   await snap('https://apple.com', {
+  //     viewports: ['iPad Pro'],
+  //     fullPage: true,
+  //     style: {
+  //       filter: 'grayscale(100%)'
+  //     }
+  //   });  
+  // } catch (error) {
+  //   console.log(error.stack)
+  //   throw error;
+  // }
   
 })();

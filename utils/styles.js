@@ -3,7 +3,7 @@ function stringifyStyle(style){
 };
 
 function getStyle(className, style){ 
-  return `${className}: { ${stringifyStyle(style)} }`;
+  return `${className}{ ${stringifyStyle(style)} }`;
 }
       
 function getStyles(style) {

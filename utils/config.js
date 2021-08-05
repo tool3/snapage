@@ -15,6 +15,7 @@ function getConfig(config, localPath) {
     name: generateId(),
     path: `${localPath}/snaps`,
     viewports: [{ width: 1920, height: 1080 }, 'iPad Pro', 'iPhone X'],
+    puppeteerOptions: {args: ['--no-sandbox', '--disable-setuid-sandbox']},
     style: {},
     script: false,
     fullPage: false,

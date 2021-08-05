@@ -28,8 +28,7 @@ async function snap(url, options = {}) {
     const cluster = await Cluster.launch({
       concurrency: Cluster.CONCURRENCY_CONTEXT,
       maxConcurrency: 3,
-      puppeteerOptions: {args: ['--no-sandbox', '--disable-setuid-sandbox']}
-      
+      puppeteerOptions: opts.puppeteerOptions
     });
 
     await cluster.task(async ({ page, data: { url, viewport } }) => {

@@ -37,7 +37,7 @@ async function screenshot({ page, url, options }) {
     const {content} = stylesObject;
     // apply styles
     await page.addStyleTag({ content });
-
+    
     // lazy loaded images
     if (scroll) {
       await scrollPage(page);
