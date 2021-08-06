@@ -16,4 +16,13 @@ export type SnapageOptions = {
   persist?: boolean;
 };
 
-export default function snap(url: string, options?: SnapageOptions): Promise<Array<Buffer>>;
+export type Result = {
+  snapDir: string;
+  viewport: Viewport;
+  opts: SnapageOptions;
+  device: string;
+  screenshotPath: string
+  screenshots: Array<Buffer>;
+}
+
+export default function snap(url: string, options?: SnapageOptions): Promise<Result>;

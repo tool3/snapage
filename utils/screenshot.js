@@ -1,11 +1,11 @@
-const { getStyles, stringifyStyle } = require("./styles");
+const { getStyles, stringifyStyle } = require('./styles');
 
 async function screenshot({ page, url, options }) {
   try {
     const { viewport, devices, opts, screenshots = [] } = options;
     const { path, script, style, name, scroll, element, persist } = opts;
     // visit page
-    const styles = stringifyStyle(style)
+    const styles = stringifyStyle(style);
     if (url.includes('data:image')) {
       await page.setContent(
         `<html><body style="margin: 0;"><img style="margin: 0; width:100%; ${styles}" src="${url}" /></body></html>`
@@ -13,7 +13,7 @@ async function screenshot({ page, url, options }) {
     } else {
       await page.goto(url, { waitUntil: 'networkidle0' });
     }
-    
+
     const device = typeof viewport === 'string';
 
     // set viewport
@@ -25,19 +25,21 @@ async function screenshot({ page, url, options }) {
       await page.setViewport({ ...viewport, deviceScaleFactor: 4 });
     }
 
-    const screenshotPath = persist ? `${path}/${name}_${
-      device ? viewport : Object.values(viewport).join('x')
-    }.png` : undefined;
+    const screenshotPath = persist
+      ? `${path}/${name}_${
+          device ? viewport : Object.values(viewport).join('x')
+        }.png`
+      : undefined;
 
-    const hasClasses = Object.values(style).some(s => typeof s === "object");
-    const stylesObject = {content: `body{ ${styles} }`};
+    const hasClasses = Object.values(style).some((s) => typeof s === 'object');
+    const stylesObject = { content: `body{ ${styles} }` };
     if (hasClasses) {
-      Object.assign(stylesObject, {content: getStyles(style)})
+      Object.assign(stylesObject, { content: getStyles(style) });
     }
-    const {content} = stylesObject;
+    const { content } = stylesObject;
     // apply styles
     await page.addStyleTag({ content });
-    
+
     // lazy loaded images
     if (scroll) {
       await scrollPage(page);
@@ -51,7 +53,9 @@ async function screenshot({ page, url, options }) {
     if (element) {
       const area = await page.$(element);
       const filePath = persist ? screenshotPath : undefined;
-      return screenshots.push(await area.screenshot({ ...opts, path: filePath }));
+      return screenshots.push(
+        await area.screenshot({ ...opts, path: filePath })
+      );
     }
 
     screenshots.push(await page.screenshot({ ...opts, path: screenshotPath }));
