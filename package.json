@@ -1,6 +1,6 @@
 {
   "name": "snapage",
-  "version": "1.1.2",
+  "version": "1.2.0",
   "description": "take beautiful page screenshots",
   "main": "snapage.js",
   "scripts": {
