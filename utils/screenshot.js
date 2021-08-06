@@ -2,8 +2,14 @@ const { getStyles, stringifyStyle } = require('./styles');
 
 async function screenshot({ page, url, options }) {
   try {
-    const { viewport, devices, opts, screenshots = [] } = options;
-    const { path, script, style, name, scroll, element, persist } = opts;
+    const {
+      viewport,
+      devices,
+      opts,
+      screenshots = [],
+      screenshotPath,
+    } = options;
+    const { script, style, scroll, element, persist } = opts;
     // visit page
     const styles = stringifyStyle(style);
     if (url.includes('data:image')) {
@@ -24,12 +30,6 @@ async function screenshot({ page, url, options }) {
     } else {
       await page.setViewport({ ...viewport, deviceScaleFactor: 4 });
     }
-
-    const screenshotPath = persist
-      ? `${path}/${name}_${
-          device ? viewport : Object.values(viewport).join('x')
-        }.png`
-      : undefined;
 
     const hasClasses = Object.values(style).some((s) => typeof s === 'object');
     const stylesObject = { content: `body{ ${styles} }` };
@@ -58,7 +58,13 @@ async function screenshot({ page, url, options }) {
       );
     }
 
-    screenshots.push(await page.screenshot({ ...opts, path: screenshotPath }));
+    screenshots.push({
+      buffer: await page.screenshot({ ...opts, path: screenshotPath }),
+      screenshotPath,
+      opts,
+      device,
+      viewport,
+    });
   } catch (error) {
     console.error(error);
   }

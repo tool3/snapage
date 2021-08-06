@@ -16,12 +16,17 @@ export type SnapageOptions = {
   persist?: boolean;
 };
 
-export type Result = {
+export type SnapMeta = {
+  viewport: string | Record<string, number>;
+  name: string;
+  screenshotPath: string;
   snapDir: string;
-  viewport: Viewport;
-  opts: SnapageOptions;
   device: string;
-  screenshotPath: string
+  opts: Record<string, any>;
+};
+
+export type Result = {
+  meta: SnapMeta[];
   screenshots: Array<Buffer>;
 }
 

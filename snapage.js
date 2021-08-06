@@ -70,7 +70,23 @@ async function snap(url, options = {}) {
     await cluster.idle();
     await cluster.close();
 
-    return { screenshots, meta };
+    const results = screenshots.reduce(
+      (acc, item) => {
+        const { buffer, screenshotPath, device, opts, viewport } = item;
+        acc.screenshots.push(buffer);
+        acc.meta.push({
+          viewport,
+          name,
+          screenshotPath,
+          snapDir,
+          opts,
+          device,
+        });
+        return acc;
+      },
+      { screenshots: [], meta: [] }
+    );
+    return results;
   } catch (err) {
     console.error(new Error(`\x1b[32msnap error: ${err.message}\x1b[0m`));
     console.error(err.stack);
