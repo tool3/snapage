@@ -8,7 +8,7 @@ export type Style = Record<string, string>;
 export type SnapageOptions = {
   name?: string;
   path?: string;
-  viewports?: Array<Viewport>;
+  viewports?: Viewport[];
   style?: Style;
   script?: string;
   fullPage?: boolean;
@@ -27,7 +27,7 @@ export type SnapMeta = {
 
 export type Result = {
   meta: SnapMeta[];
-  screenshots: Array<Buffer>;
+  screenshots: Buffer[];
 }
 
 export default function snap(url: string, options?: SnapageOptions): Promise<Result>;
