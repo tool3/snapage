@@ -47,7 +47,7 @@ export type Viewport = {
 } | string;
 
 
-export type SnapageOptions = {
+export type SnapOptions = {
   name?: string;
   path?: string;
   viewports?: Viewport[];
@@ -75,7 +75,7 @@ export type SnapResult = {
   snaps: Buffer[];
 }
 
-export default function snap(url: string, options?: SnapageOptions): Promise<SnapResult>;
+export default function snap(url: string, options?: SnapOptions): Promise<SnapResult>;
 ```
 # examples
 don't persist screenshots instead return screenshot per viewport provided in the `viewports` array:

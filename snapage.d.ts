@@ -6,7 +6,7 @@ export type Viewport = {
 } | string;
 
 
-export type SnapageOptions = {
+export type SnapOptions = {
   name?: string;
   path?: string;
   viewports?: Viewport[];
@@ -34,4 +34,4 @@ export type SnapResult = {
   snaps: Buffer[];
 }
 
-export default function snap(url: string, options?: SnapageOptions): Promise<SnapResult>;
+export default function snap(url: string, options?: SnapOptions): Promise<SnapResult>;
