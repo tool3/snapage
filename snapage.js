@@ -15,7 +15,7 @@ async function snap(url, options = {}) {
     // set config
     const localPath = process.env.INIT_CWD || process.cwd();
     const opts = getConfig(options, localPath);
-    const { name, puppeteerOptions, viewports, persist } = opts;
+    const { name, puppeteerOptions, viewports, persist, mode } = opts;
     const snapDir = path.resolve(opts.path);
     const meta = {};
 
@@ -26,7 +26,7 @@ async function snap(url, options = {}) {
       .catch(() => 0);
     if (!exists) await fs.mkdir(snapDir);
     const devices = puppeteer.devices;
-    const screenshots = [];
+    const snaps = [];
 
     const cluster = await Cluster.launch({
       concurrency: Cluster.CONCURRENCY_CONTEXT,
@@ -36,29 +36,29 @@ async function snap(url, options = {}) {
 
     await cluster.task(async ({ page, data: { url, viewport } }) => {
       const device = typeof viewport === 'string';
-      const screenshotPath = persist
+      const snapPath = persist
         ? `${snapDir}/${name}_${
             device
               ? viewport.replace(' ', '_')
               : Object.values(viewport).join('x')
-          }.png`
+          }.${mode === 'screenshot' ? 'png' : 'pdf'}`
         : undefined;
       const options = {
         snapDir,
+        snapPath,
         viewport,
         opts,
         devices,
         device,
-        screenshots,
-        screenshotPath,
+        snaps,
       };
       Object.assign(meta, {
         snapDir,
+        snapPath,
         viewport,
         opts,
         device,
-        screenshots,
-        screenshotPath,
+        snaps,
       });
       await screenshot({ page, url, options });
     });
@@ -70,21 +70,21 @@ async function snap(url, options = {}) {
     await cluster.idle();
     await cluster.close();
 
-    const results = screenshots.reduce(
+    const results = snaps.reduce(
       (acc, item) => {
-        const { buffer, screenshotPath, device, opts, viewport } = item;
-        acc.screenshots.push(buffer);
+        const { buffer, snapPath, device, opts, viewport } = item;
+        acc.snaps.push(buffer);
         acc.meta.push({
           viewport,
           name,
-          screenshotPath,
+          snapPath,
           snapDir,
           opts,
           device,
         });
         return acc;
       },
-      { screenshots: [], meta: [] }
+      { snaps: [], meta: [] }
     );
     return results;
   } catch (err) {

@@ -1,6 +1,6 @@
-import snap from './snapage';
+import snap, {SnapResult} from './snapage';
 
 (async () => {
-    const screenshots: Buffer[] = await snap('https://google.com', {persist: false});
+    const screenshots: SnapResult = await snap('https://google.com', {persist: false});
     console.log(screenshots);
 })();

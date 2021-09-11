@@ -6,10 +6,10 @@ async function screenshot({ page, url, options }) {
       viewport,
       devices,
       opts,
-      screenshots = [],
-      screenshotPath,
+      snaps = [],
+      snapPath,
     } = options;
-    const { script, style, scroll, element, persist } = opts;
+    const { script, style, scroll, element, persist, mode, wait } = opts;
     // visit page
     const styles = stringifyStyle(style);
     if (url.includes('data:image')) {
@@ -32,10 +32,12 @@ async function screenshot({ page, url, options }) {
     }
 
     const hasClasses = Object.values(style).some((s) => typeof s === 'object');
+    
     const stylesObject = { content: `body{ ${styles} }` };
     if (hasClasses) {
       Object.assign(stylesObject, { content: getStyles(style) });
     }
+    
     const { content } = stylesObject;
     // apply styles
     await page.addStyleTag({ content });
@@ -48,19 +50,22 @@ async function screenshot({ page, url, options }) {
 
     // before script
     if (script) await page.evaluate(script);
+    
+    // wait a bit
+    if (wait) await page.waitForTimeout(wait);
 
     // set element
     if (element) {
       const area = await page.$(element);
-      const filePath = persist ? screenshotPath : undefined;
-      return screenshots.push(
+      const filePath = persist ? snapPath : undefined;
+      return snaps.push(
         await area.screenshot({ ...opts, path: filePath })
       );
     }
-
-    screenshots.push({
-      buffer: await page.screenshot({ ...opts, path: screenshotPath }),
-      screenshotPath,
+ 
+    snaps.push({
+      buffer: await page[mode]({ ...opts, path: snapPath }),
+      snapPath,
       opts,
       device,
       viewport,

@@ -21,6 +21,9 @@ function getConfig(config, localPath) {
     fullPage: false,
     scroll: false,
     persist: true,
+    wait: 0,
+    printBackground: true,
+    mode: 'screenshot'
   };
 
   if (config) {

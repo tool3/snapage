@@ -1,9 +1,10 @@
+export type Style = Record<string, string>;
+
 export type Viewport = {
   width?: number;
   height?: number;
-};
+} | string;
 
-export type Style = Record<string, string>;
 
 export type SnapageOptions = {
   name?: string;
@@ -14,20 +15,23 @@ export type SnapageOptions = {
   fullPage?: boolean;
   scroll?: boolean;
   persist?: boolean;
+  printBackground?: boolean;
+  wait?: number;
+  mode?: string;
 };
 
 export type SnapMeta = {
-  viewport: string | Record<string, number>;
   name: string;
-  screenshotPath: string;
+  snapPath: string;
   snapDir: string;
-  device: string;
+  viewport: Viewport;
+  device: boolean;
   opts: Record<string, any>;
 };
 
-export type Result = {
+export type SnapResult = {
   meta: SnapMeta[];
-  screenshots: Buffer[];
+  snaps: Buffer[];
 }
 
-export default function snap(url: string, options?: SnapageOptions): Promise<Result>;
+export default function snap(url: string, options?: SnapageOptions): Promise<SnapResult>;
