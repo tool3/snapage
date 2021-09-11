@@ -12,7 +12,7 @@ function generateId() {
 
 function getConfig(config, localPath) {
   const options = {
-    name: generateId(),
+    name: () => generateId(),
     path: `${localPath}/snaps`,
     viewports: [{ width: 1920, height: 1080 }, 'iPad Pro', 'iPhone X'],
     puppeteerOptions: { args: ['--no-sandbox', '--disable-setuid-sandbox'] },

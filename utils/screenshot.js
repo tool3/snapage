@@ -1,14 +1,8 @@
 const { getStyles, stringifyStyle } = require('./styles');
 
-async function screenshot({ page, url, options }) {
+async function screenshot({ page, url, options, name }) {
   try {
-    const {
-      viewport,
-      devices,
-      opts,
-      snaps = [],
-      snapPath,
-    } = options;
+    const { viewport, devices, opts, snapPath, snapDir, snaps = [], metas = []  } = options;
     const { script, style, scroll, element, persist, mode, wait } = opts;
     // visit page
     const styles = stringifyStyle(style);
@@ -32,12 +26,12 @@ async function screenshot({ page, url, options }) {
     }
 
     const hasClasses = Object.values(style).some((s) => typeof s === 'object');
-    
+
     const stylesObject = { content: `body{ ${styles} }` };
     if (hasClasses) {
       Object.assign(stylesObject, { content: getStyles(style) });
     }
-    
+
     const { content } = stylesObject;
     // apply styles
     await page.addStyleTag({ content });
@@ -50,7 +44,7 @@ async function screenshot({ page, url, options }) {
 
     // before script
     if (script) await page.evaluate(script);
-    
+
     // wait a bit
     if (wait) await page.waitForTimeout(wait);
 
@@ -58,18 +52,12 @@ async function screenshot({ page, url, options }) {
     if (element) {
       const area = await page.$(element);
       const filePath = persist ? snapPath : undefined;
-      return snaps.push(
-        await area.screenshot({ ...opts, path: filePath })
-      );
+      return snaps.push(await area.screenshot({ ...opts, path: filePath }));
     }
- 
-    snaps.push({
-      buffer: await page[mode]({ ...opts, path: snapPath }),
-      snapPath,
-      opts,
-      device,
-      viewport,
-    });
+    const snap = await page[mode]({ ...opts, path: snapPath });
+    
+    snaps.push(snap);
+    metas.push({viewport, name, snapPath, snapDir, opts, device});
   } catch (error) {
     console.error(error);
   }

@@ -27,6 +27,7 @@ async function snap(url, options = {}) {
     if (!exists) await fs.mkdir(snapDir);
     const devices = puppeteer.devices;
     const snaps = [];
+    const metas = [];
 
     const cluster = await Cluster.launch({
       concurrency: Cluster.CONCURRENCY_CONTEXT,
@@ -36,8 +37,10 @@ async function snap(url, options = {}) {
 
     await cluster.task(async ({ page, data: { url, viewport } }) => {
       const device = typeof viewport === 'string';
+      const snapName = name()
+      console.log(snapName)
       const snapPath = persist
-        ? `${snapDir}/${name}_${
+        ? `${snapDir}/${snapName}_${
             device
               ? viewport.replace(' ', '_')
               : Object.values(viewport).join('x')
@@ -51,6 +54,7 @@ async function snap(url, options = {}) {
         devices,
         device,
         snaps,
+        metas
       };
       Object.assign(meta, {
         snapDir,
@@ -60,7 +64,7 @@ async function snap(url, options = {}) {
         device,
         snaps,
       });
-      await screenshot({ page, url, options });
+      await screenshot({ page, url, options, name: snapName });
     });
 
     for (const viewport of viewports) {
@@ -69,24 +73,8 @@ async function snap(url, options = {}) {
 
     await cluster.idle();
     await cluster.close();
-
-    const results = snaps.reduce(
-      (acc, item) => {
-        const { buffer, snapPath, device, opts, viewport } = item;
-        acc.snaps.push(buffer);
-        acc.meta.push({
-          viewport,
-          name,
-          snapPath,
-          snapDir,
-          opts,
-          device,
-        });
-        return acc;
-      },
-      { snaps: [], meta: [] }
-    );
-    return results;
+    
+    return { snaps, meta: metas };
   } catch (err) {
     console.error(new Error(`\x1b[32msnap error: ${err.message}\x1b[0m`));
     console.error(err.stack);
