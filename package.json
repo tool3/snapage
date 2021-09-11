@@ -6,9 +6,20 @@
   "scripts": {
     "test": "node test.js"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": [
+    "snap",
+    "screenshot",
+    "pdf",
+    "puppeteer",
+    "puppeteer-cluster"
+  ],
+  "files": [
+    "utils/",
+    "snapage.js",
+    "snapage.d.ts"
+  ],
+  "author": "Tal Hayut",
+  "license": "MIT",
   "dependencies": {
     "puppeteer": "5.5.0",
     "puppeteer-cluster": "^0.22.0"
