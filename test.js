@@ -31,10 +31,8 @@ const snap = require('./snapage');
 const fs = require('fs');
 (async () => {
   const screenshots = await snap('https://google.com', {persist: false, viewports: ['iPad Pro', {width: 800, height: 600}]});
-  console.log(screenshots)
   let counter = 0;
   screenshots.snaps.forEach((item, i) => {
     fs.writeFileSync(counter++ + '.png', item);
   })
-  // console.log(JSON.stringify(result, null, 2));
 })();

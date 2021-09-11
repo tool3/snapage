@@ -37,8 +37,8 @@ async function snap(url, options = {}) {
 
     await cluster.task(async ({ page, data: { url, viewport } }) => {
       const device = typeof viewport === 'string';
-      const snapName = name()
-      console.log(snapName)
+      const snapName = name();
+
       const snapPath = persist
         ? `${snapDir}/${snapName}_${
             device
@@ -54,7 +54,7 @@ async function snap(url, options = {}) {
         devices,
         device,
         snaps,
-        metas
+        metas,
       };
       Object.assign(meta, {
         snapDir,
@@ -73,7 +73,7 @@ async function snap(url, options = {}) {
 
     await cluster.idle();
     await cluster.close();
-    
+
     return { snaps, meta: metas };
   } catch (err) {
     console.error(new Error(`\x1b[32msnap error: ${err.message}\x1b[0m`));

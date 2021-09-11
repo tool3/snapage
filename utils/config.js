@@ -23,7 +23,7 @@ function getConfig(config, localPath) {
     persist: true,
     wait: 0,
     printBackground: true,
-    mode: 'screenshot'
+    mode: 'screenshot',
   };
 
   if (config) {
