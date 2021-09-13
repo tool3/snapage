@@ -46,11 +46,11 @@ async function snap(url, options = {}) {
               : Object.values(viewport).join('x')
           }.${mode === 'screenshot' ? 'png' : 'pdf'}`
         : undefined;
-      const options = {
+      const config = {
         snapDir,
         snapPath,
         viewport,
-        opts,
+        options: opts,
         devices,
         device,
         snaps,
@@ -60,11 +60,11 @@ async function snap(url, options = {}) {
         snapDir,
         snapPath,
         viewport,
-        opts,
+        options: opts,
         device,
         snaps,
       });
-      await screenshot({ page, url, options, name: snapName });
+      await screenshot({ page, url, config, name: snapName });
     });
 
     for (const viewport of viewports) {

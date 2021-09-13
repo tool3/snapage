@@ -1,17 +1,17 @@
 const { getStyles, stringifyStyle } = require('./styles');
 
-async function screenshot({ page, url, options, name }) {
+async function screenshot({ page, url, config, name }) {
   try {
     const {
       viewport,
       devices,
-      opts,
+      options,
       snapPath,
       snapDir,
       snaps = [],
       metas = [],
-    } = options;
-    const { script, style, scroll, element, persist, mode, wait } = opts;
+    } = config;
+    const { script, style, scroll, element, persist, mode, wait } = options;
     // visit page
     const styles = stringifyStyle(style);
     if (url.includes('data:image')) {
@@ -60,12 +60,11 @@ async function screenshot({ page, url, options, name }) {
     if (element) {
       const area = await page.$(element);
       const filePath = persist ? snapPath : undefined;
-      return snaps.push(await area.screenshot({ ...opts, path: filePath }));
+      return snaps.push(await area.screenshot({ ...options, path: filePath }));
     }
-    const snap = await page[mode]({ ...opts, path: snapPath });
+    snaps.push(await page[mode]({ ...options, path: snapPath }));
+    metas.push({ viewport, name, snapPath, snapDir, options, device });
 
-    snaps.push(snap);
-    metas.push({ viewport, name, snapPath, snapDir, opts, device });
   } catch (error) {
     console.error(error);
   }
