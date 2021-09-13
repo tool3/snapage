@@ -3,24 +3,31 @@ const expect = require('chai').expect;
 const screenshot = require('./screenshot');
 
 describe('screenshot', () => {
+  let content = '';
+  let viewport = '';
+  let metas = [];
+  let snaps = [];
+  
+  const page = {
+    setContent: (cnt) => {
+      content = cnt;
+    },
+    emulateMediaType: () => {},
+    setViewport: (vprt) => {
+      viewport = vprt;
+    },
+    addStyleTag: () => {},
+    screenshot: () => 'snapped',
+  };
+
+  afterEach(() => {
+    content = '';
+    viewport = '';
+    metas = [];
+    snaps = [];
+  })
+
   it('should supoport data urls', async () => {
-    let content = '';
-    let viewport = '';
-
-    const page = {
-      setContent: (cnt) => {
-        content = cnt;
-      },
-      emulateMediaType: () => {},
-      setViewport: (vprt) => {
-        viewport = vprt;
-      },
-      addStyleTag: () => {},
-      screenshot: () => 'snapped',
-    };
-    const metas = [];
-    const snaps = [];
-
     await screenshot({
       page,
       url: 'data:image_base64_img',
@@ -28,6 +35,7 @@ describe('screenshot', () => {
       name: 'test',
     });
 
+    expect(content).to.equal('<html><body style="margin: 0;"><img style="margin: 0; width:100%; " src="data:image_base64_img" /></body></html>')
     expect(metas).to.deep.equal([
       {
         viewport: undefined,
@@ -39,5 +47,25 @@ describe('screenshot', () => {
       },
     ]);
 		expect(snaps).to.deep.equal(['snapped']);
+  });
+
+  it('should support pdfs', () => {
+    
+  });
+
+  it('should support pdfs', () => {
+    
+  });
+
+  it('should scroll page', () => {
+    
+  });
+
+  it('should support element screenshot', () => {
+    
+  });
+
+  it('should support element pdf', () => {
+    
   });
 });

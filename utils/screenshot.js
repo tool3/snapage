@@ -63,8 +63,9 @@ async function screenshot({ page, url, config, name }) {
       return snaps.push(await area.screenshot({ ...options, path: filePath }));
     }
     snaps.push(await page[mode]({ ...options, path: snapPath }));
-    metas.push({ viewport, name, snapPath, snapDir, options, device });
 
+    metas.push({ viewport, name, snapPath, snapDir, options, device });
+    
   } catch (error) {
     console.error(error);
   }
