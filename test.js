@@ -35,5 +35,5 @@ const snap = require('./snapage');
   // screenshots.snaps.forEach((item, i) => {
   //   fs.writeFileSync(counter++ + '.png', item);
   // })
-  const screenshots: SnapResult = await snap('https://google.com', {persist: false, viewports: ['iPad Pro', {width: 800, height: 600}]});
+  await snap('https://google.com', {viewports: ['Nexus 4 landscape']});
 })();

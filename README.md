@@ -29,9 +29,9 @@ const snap = require('snapage');
 
 # features
 ✅ plug and play   
-✅ element screenshots   
+✅ element & full page screenshots   
 ✅ custom css styles   
-✅ custom pre-snap script   
+✅ custom script to run before snap   
 ✅ supports pdf   
 ✅ supports all chrome emulated devices and their orientation   
 ✅ supports lazy loaded content by scrolling the page   
@@ -41,6 +41,9 @@ const snap = require('snapage');
 ```typescript
 export type Style = Record<string, string>;
 
+
+// for string viewport, snapage will emulate the given device (e.g 'Nexus 4 landscape')
+// see pptr devices: https://github.com/puppeteer/puppeteer/blob/main/src/common/DeviceDescriptors.ts
 export type Viewport = string | {
   width?: number;
   height?: number;
@@ -100,7 +103,7 @@ const snap = require('snap');
     style: {
       filter: 'saturate(50%)'
       }, 
-    viewports: [{width: 800, height: 600}]
+    viewports: [{width: 800, height: 600}, '']
   });
 })()
 ```
