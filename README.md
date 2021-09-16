@@ -41,10 +41,10 @@ const snap = require('snapage');
 ```typescript
 export type Style = Record<string, string>;
 
-export type Viewport = {
+export type Viewport = string | {
   width?: number;
   height?: number;
-} | string;
+}
 
 
 export type SnapOptions = {
@@ -79,20 +79,41 @@ export default function snap(url: string, options?: SnapOptions): Promise<SnapRe
 ```
 # examples
 ## pdf
-snap a pdf of `apple.com`, in an iPhone X and desktop 800x600, scroll the page to get lazy loaded content.
+snap a full page pdf of `apple.com`, in an iPhone X and desktop 800x600, scroll the page to get lazy loaded content.
 ```javascript
 const snap = require('snap');
 (async () => {
-  await snap('https://apple.com', {mode: 'pdf', scroll: true, viewports: ['iPhone X', {width: 800, height: 600}]});
+  await snap('https://apple.com', {
+    mode: 'pdf', 
+    scroll: true, 
+    viewports: ['iPhone X', {width: 800, height: 600}]
+  });
 })()
 ```
 
-## custom style
-snap a pdf of `apple.com`, in an iPhone X and desktop 800x600, scroll the page to get lazy loaded content.
+## custom css style
+snap a viewport screenshot of `apple.com`, on desktop 800x600, desaturate colors by 50%.   
 ```javascript
 const snap = require('snap');
 (async () => {
-  await snap('https://apple.com', {mode: 'pdf', scroll: true, viewports: ['iPhone X', {width: 800, height: 600}]});
+  await snap('https://apple.com', {
+    style: {
+      filter: 'saturate(50%)'
+      }, 
+    viewports: [{width: 800, height: 600}]
+  });
+})()
+```
+
+## custom script
+snap a viewport screenshot of `npmjs.com`, on desktop 1200x1080, add a red border to every element on the page via a script.
+```javascript
+const snap = require('snap');
+(async () => {
+  await snap('https://www.npmjs.com', {
+    script: 'document.querySelectorAll("*").forEach(e => e.style.border = "1px solid red")',
+    viewports: [{width: 1200, height: 1080}]
+  });
 })()
 ```
 
@@ -101,7 +122,10 @@ don't persist screenshots instead return screenshot per viewport provided in the
 by default, `snapage`saves the screenshots/pdfs to the `snapDir` provided in config.   
 ```typescript
 import snap, {SnapResult} from 'snapage';
-const screenshots: SnapResult = await snap('https://google.com', {persist: false, viewports: ['iPad Pro', {width: 800, height: 600}]});
+const screenshots: SnapResult = await snap('https://google.com', {
+    persist: false,
+    viewports: ['iPad Pro', { width: 800, height: 600 }],
+  });
 console.log(screenshots);
 // {
 //   snaps: [

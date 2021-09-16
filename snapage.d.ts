@@ -1,9 +1,9 @@
 export type Style = Record<string, string>;
 
-export type Viewport = {
+export type Viewport = string | {
   width?: number;
   height?: number;
-} | string;
+};
 
 
 export type SnapOptions = {
