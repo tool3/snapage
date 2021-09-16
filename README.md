@@ -87,6 +87,15 @@ const snap = require('snap');
 })()
 ```
 
+## custom style
+snap a pdf of `apple.com`, in an iPhone X and desktop 800x600, scroll the page to get lazy loaded content.
+```javascript
+const snap = require('snap');
+(async () => {
+  await snap('https://apple.com', {mode: 'pdf', scroll: true, viewports: ['iPhone X', {width: 800, height: 600}]});
+})()
+```
+
 ## don't persist
 don't persist screenshots instead return screenshot per viewport provided in the `viewports` array.
 by default, `snapage`saves the screenshots/pdfs to the `snapDir` provided in config.   
