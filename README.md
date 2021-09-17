@@ -41,7 +41,6 @@ const snap = require('snapage');
 ```typescript
 export type Style = Record<string, string>;
 
-
 // for string viewport, snapage will emulate the given device (e.g 'Nexus 4 landscape')
 // see pptr devices: https://github.com/puppeteer/puppeteer/blob/main/src/common/DeviceDescriptors.ts
 export type Viewport = string | {
@@ -102,7 +101,7 @@ const snap = require('snap');
   await snap('https://apple.com', {
     style: {
       filter: 'saturate(50%)'
-      }, 
+    }, 
     viewports: [{width: 800, height: 600}, '']
   });
 })()
