@@ -83,7 +83,7 @@ export default function snap(url: string, options?: SnapOptions): Promise<SnapRe
 ## pdf
 snap a full page pdf of `apple.com`, in an iPhone X and desktop 800x600, scroll the page to get lazy loaded content.
 ```javascript
-const snap = require('snap');
+const snap = require('snapage');
 (async () => {
   await snap('https://apple.com', {
     mode: 'pdf', 
@@ -96,7 +96,7 @@ const snap = require('snap');
 ## custom css style
 snap a viewport screenshot of `apple.com`, on desktop 800x600, desaturate colors by 50%.   
 ```javascript
-const snap = require('snap');
+const snap = require('snapage');
 (async () => {
   await snap('https://apple.com', {
     style: {
@@ -110,7 +110,7 @@ const snap = require('snap');
 ## custom script
 snap a viewport screenshot of `npmjs.com`, on desktop 1200x1080, add a red border to every element on the page via a script.
 ```javascript
-const snap = require('snap');
+const snap = require('snapage');
 (async () => {
   await snap('https://www.npmjs.com', {
     script: 'document.querySelectorAll("*").forEach(e => e.style.border = "1px solid red")',
