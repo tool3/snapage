@@ -2,15 +2,8 @@ const { getStyles, stringifyStyle } = require('./styles');
 
 async function screenshot({ page, url, config, name }) {
   try {
-    const {
-      viewport,
-      devices,
-      options,
-      snapPath,
-      snapDir,
-      snaps = [],
-      metas = [],
-    } = config;
+    const { viewport, devices, options, snapPath, snapDir, snaps = [], metas = [] } = config;
+
     const { script, style, scroll, element, persist, mode, wait } = options;
     // visit page
     const styles = stringifyStyle(style);
@@ -22,7 +15,7 @@ async function screenshot({ page, url, config, name }) {
       await page.goto(url, { waitUntil: 'networkidle0' });
     }
 
-    const device = typeof viewport === 'string';
+    const device = typeof viewport === 'string' && !viewport.match(/x/i);
 
     // set viewport
     await page.emulateMediaType('screen');
@@ -65,7 +58,6 @@ async function screenshot({ page, url, config, name }) {
     snaps.push(await page[mode]({ ...options, path: snapPath }));
 
     metas.push({ viewport, name, snapPath, snapDir, options, device });
-    
   } catch (error) {
     console.error(error);
   }
