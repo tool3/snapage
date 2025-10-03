@@ -21,7 +21,7 @@
   "author": "Tal Hayut",
   "license": "MIT",
   "dependencies": {
-    "puppeteer": "^13.1.0",
+    "puppeteer": "^24.23.0",
     "puppeteer-cluster": "^0.22.0"
   },
   "devDependencies": {
